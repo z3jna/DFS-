@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="meta.contactTitle">Kontakt — DFS Vizualizacija</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="container">
+      <!-- LOGO / BRAND -->
+      <a class="brand" href="../home-page/index.html" aria-label="Početna">
+        <img src="../assets/logo1.png" alt="DFS Logo" class="logo"/>
+      </a>
+
+      <!-- NAVIGACIJA -->
+      <nav class="nav" data-nav>
+        <a href="../home-page/index.html" data-i18n="nav.home">Početna</a>
+        <a href="../algoritmi-page/index.html" data-i18n="nav.algoritmi">Algoritmi</a>
+        <a href="../dfs-page/index.html" data-i18n="nav.dfs">DFS</a>
+        <a href="../kontakt-page/index.html" aria-current="page" data-i18n="nav.kontakt">Kontakt</a>
+        <a href="../login-page/index.html" data-i18n="nav.prijava">Prijava</a>
+      </nav>
+
+      <!-- DESNO: EN/SRP + HAMBURGER -->
+      <div class="right-controls">
+        <button id="langToggle" class="lang-btn" type="button">EN</button>
+        <button class="nav-toggle" aria-label="Otvorite meni" aria-expanded="false" type="button">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="contact-page">
+    <h1 class="page-title" data-i18n="contact.title">Kontakt</h1>
+    <p class="page-sub" data-i18n="contact.subtitle">Imaš pitanje, predlog ili želiš saradnju? Piši nam.</p>
+
+    <section class="contact-grid">
+      <!-- Forma -->
+      <form class="contact-card contact-form" id="contactForm" novalidate>
+        <div class="field">
+          <label for="name" data-i18n="contact.nameLabel">Ime i prezime</label>
+          <input id="name" name="name" type="text"
+                 placeholder="Zejna Mahmutović"
+                 data-i18n-placeholder="contact.namePh" required>
+          <small class="error"></small>
+        </div>
+
+        <div class="field">
+          <label for="email" data-i18n="contact.emailLabel">Email</label>
+          <input id="email" name="email" type="email"
+                 placeholder="zejna@gmail.com"
+                 data-i18n-placeholder="contact.emailPh" required>
+          <small class="error"></small>
+        </div>
+
+        <div class="field">
+          <label for="phone" data-i18n="contact.phoneLabel">Telefon (opciono)</label>
+          <input id="phone" name="phone" type="tel"
+                 placeholder="+381 60 123 4567"
+                 data-i18n-placeholder="contact.phonePh"
+                 pattern="^\\+?\\d[\\d\\s\\-]{6,}$">
+          <small class="error"></small>
+        </div>
+
+        <div class="field">
+          <label for="subject" data-i18n="contact.subjectLabel">Tema</label>
+          <input id="subject" name="subject" type="text"
+                 placeholder="Predlog za novu funkciju"
+                 data-i18n-placeholder="contact.subjectPh" required>
+          <small class="error"></small>
+        </div>
+
+        <div class="field">
+          <label for="message" data-i18n="contact.messageLabel">Poruka</label>
+          <textarea id="message" name="message" rows="6"
+                    placeholder="Napiši poruku..."
+                    data-i18n-placeholder="contact.messagePh" required></textarea>
+          <small class="error"></small>
+        </div>
+
+        <label class="checkbox">
+          <input type="checkbox" id="consent" required>
+          <span data-i18n="contact.consent">Slažem se da se moji podaci koriste za odgovor na ovu poruku.</span>
+        </label>
+
+        <button type="submit" class="btn-primary" data-i18n="contact.send">Pošalji</button>
+      </form>
+
+      <!-- Kontakt info -->
+      <aside class="contact-card contact-info">
+        <h2 data-i18n="contact.infoTitle">Kontakt podaci</h2>
+        <ul class="info-list">
+          <li><span>📧</span> <a href="mailto:dfsalgoritmi@gmail.com">dfsalgoritmi@gmail.com</a></li>
+          <li><span>📞</span> <a href="tel:+381601234567">+381 60 123 4567</a></li>
+          <li><span>📍</span> <span data-i18n="contact.city">Novi Pazar, Srbija</span></li>
+          <li><span>⏰</span> <span data-i18n="contact.hours">Pon–Pet 09:00–17:00</span></li>
+        </ul>
+      </aside>
+    </section>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" data-i18n="contact.toast">Poruka je poslata. Hvala!</div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p data-i18n="footer.copy">© 2025 DFS Vizualizacija — Zejna Mahmutović</p>
+    </div>
+  </footer>
+
+  <script src="kontakt.js" defer></script>
+</body>
+</html>

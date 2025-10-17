@@ -1,0 +1,239 @@
+:root {
+  --bg-dark: #0b0b0b;
+  --header-bg: #041d1e;
+  --cyan: #00ffff;
+  --text: #e6ffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body { height: 100%; }
+
+body {
+  min-height: 120vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', system-ui, Arial, sans-serif;
+  color: #fff;
+  background: var(--bg-dark) url("../assets/pozadina2.png") no-repeat center center fixed;
+  background-size: cover;
+}
+
+.whole-page { width: 100%; }
+
+/* =========================
+   HEADER
+========================= */
+.site-header {
+  position: relative;
+  width: 100%;
+  background: var(--header-bg);
+  box-shadow: 0 0 10px rgba(2,225,241,0.26);
+  z-index: 50;
+  padding: 14px 24px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+
+.brand img, .logo {
+  height: 40px;
+  width: auto;
+  filter: drop-shadow(0 0 10px var(--cyan));
+  vertical-align: middle;
+}
+
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav a {
+  color: var(--cyan);
+  text-decoration: none;
+  font-size: 17px;
+  text-shadow: 0 0 10px var(--cyan);
+  transition: .25s;
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+}
+
+.nav a:hover,
+.nav a[aria-current="page"] {
+  color: #fff;
+  text-shadow: 0 0 18px var(--cyan), 0 0 28px var(--cyan);
+}
+
+
+.right-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 16px;
+}
+
+
+.lang-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid rgba(0,255,255,.35);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--cyan);
+  font-weight: 600;
+  text-shadow: 0 0 8px var(--cyan);
+  transition: 0.3s;
+}
+
+.lang-btn:hover {
+  background: var(--cyan);
+  color: #012528;
+  box-shadow: 0 0 15px rgba(0,255,255,.4);
+}
+
+
+.nav-toggle {
+  background: transparent;
+  border: 0;
+  color: var(--cyan);
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  display: none;
+  z-index: 1001;
+}
+
+
+
+main { flex: 1; }
+
+.home-info {
+  position: absolute;
+  top: 50%;
+  right: 8%;
+  transform: translateY(-50%);
+  max-width: 550px;
+  color: #d9ffff;
+  text-align: right;
+  line-height: 1.8;
+}
+
+.home-info h1 {
+  font-size: 3rem;
+  color: var(--cyan);
+  text-shadow: 0 0 10px rgba(0,255,255,0.4);
+  margin-bottom: 20px;
+}
+
+.home-info p { font-size: 1.05rem; margin-bottom: 15px; }
+
+.home-info .highlight {
+  color: var(--cyan);
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0,255,255,0.6);
+}
+
+
+.site-footer {
+  background: rgba(8, 32, 34, 0.85);
+  border-top: 1px solid rgba(0,255,255,0.2);
+  text-align: center;
+  padding: 25px 0;
+  color: #aeefff;
+  font-size: .95rem;
+  letter-spacing: .5px;
+  box-shadow: 0 -2px 15px rgba(0,255,255,0.15);
+  margin-top: auto;
+}
+
+.footer-links a {
+  color: var(--cyan);
+  text-decoration: none;
+  transition: .3s ease;
+}
+
+.footer-links a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px var(--cyan);
+}
+
+
+@media (max-width: 992px) {
+  .home-info h1 { font-size: 2.4rem; }
+}
+
+@media (max-width: 768px) {
+  .nav-toggle { display: block; }
+
+  .nav {
+    display: none;
+    position: absolute;
+    right: 1rem;
+    top: 100%;
+    background: #111;
+    border: 1px solid rgba(0,255,255,.35);
+    box-shadow: 0 6px 24px rgba(0,0,0,.5);
+    border-radius: 12px;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    z-index: 1000;
+  }
+
+  .nav.open { display: flex; }
+
+  .home-info {
+    position: static;
+    transform: none;
+    max-width: 90%;
+    margin: 80px auto 0;
+    text-align: center;
+  }
+
+  .right-controls { margin-left: auto; }
+  .brand .logo { height: 36px; }
+}
+
+@media (max-width: 768px) {
+  
+  .nav {
+    right: 0;                
+    left: auto;              
+    text-align: right;
+  }
+
+  
+  .lang-btn--floating {
+    position: absolute;
+    right: 56px;             
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 60;
+    background: transparent;
+    border: 1px solid rgba(0,255,255,.35);
+    padding: 6px 12px;
+    border-radius: 10px;
+  }
+
+  
+  .nav-toggle {
+    position: relative;
+    z-index: 61;
+  }
+}
+

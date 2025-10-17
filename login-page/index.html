@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="meta.title">Login — DFS Vizualizacija</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  
+  <header class="site-header">
+    <div class="container">
+     
+      <a class="brand" href="../home-page/index.html" aria-label="Početna">
+        <img src="../assets/logo1.png" alt="DFS Logo" class="logo" />
+      </a>
+
+      
+      <nav class="nav" data-nav>
+        <a href="../home-page/index.html" data-i18n="nav.home">Početna</a>
+        <a href="../algoritmi-page/index.html" data-i18n="nav.algoritmi">Algoritmi</a>
+        <a href="../dfs-page/index.html" data-i18n="nav.dfs">DFS</a>
+        <a href="../kontakt-page/index.html" data-i18n="nav.kontakt">Kontakt</a>
+        <a href="../login-page/index.html" aria-current="page" data-i18n="nav.prijava">Prijava</a>
+      </nav>
+
+     
+      <div class="right-controls">
+        <button id="langToggle" class="lang-btn" type="button">EN</button>
+        <button class="nav-toggle" aria-label="Otvorite meni" aria-expanded="false" type="button">☰</button>
+      </div>
+    </div>
+  </header>
+
+  
+  <main class="login-page">
+    <h1 class="page-title" data-i18n="login.title">Prijava</h1>
+    <p class="page-sub" data-i18n="login.subtitle">
+      Pristupi nalogu da sačuvaš stabla, scenarije i rezultate.
+    </p>
+
+    <form class="login-card" id="loginForm" novalidate>
+      <div class="field">
+        <label for="email" data-i18n="login.emailLabel">Email</label>
+        <input id="email" name="email" type="email"
+               placeholder="npr. ana@mail.com"
+               data-i18n-placeholder="login.emailPh"
+               required />
+        <small class="error"></small>
+      </div>
+
+      <div class="field">
+        <label for="password" data-i18n="login.passwordLabel">Lozinka</label>
+        <div class="password-wrap">
+          <input id="password" name="password" type="password"
+                 placeholder="••••••••"
+                 data-i18n-placeholder="login.passwordPh"
+                 required minlength="6" />
+          <button type="button" id="togglePw" class="pw-toggle"
+                  aria-label="Prikaži lozinku"
+                  data-i18n-aria="login.showPw">👁</button>
+        </div>
+        <small class="error"></small>
+      </div>
+
+      <label class="checkbox">
+        <input type="checkbox" id="remember" />
+        <span data-i18n="login.remember">Zapamti me</span>
+      </label>
+
+      <button type="submit" class="btn-primary" data-i18n="login.submit">
+        Prijavi se
+      </button>
+    </form>
+  </main>
+
+  
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p data-i18n="footer.copy">© 2025 DFS Vizualizacija — Zejna Mahmutović</p>
+    </div>
+  </footer>
+
+ 
+  <script src="script.js" defer></script>
+</body>
+</html>

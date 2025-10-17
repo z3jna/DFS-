@@ -1,0 +1,213 @@
+:root{
+  --bg-dark:#0b0b0b;
+  --header-bg:#041d1e;
+  --cyan:#00ffff;
+  --text:#e6ffff;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html,body{ height:100%; }
+
+body{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  font-family:'Poppins', system-ui, sans-serif;
+  background:var(--bg-dark);
+  color:#fff;
+}
+
+/* ===== HEADER ===== */
+.site-header{
+  background:var(--header-bg);
+  padding:14px 20px;
+  box-shadow:0 0 10px rgba(2,225,241,.26);
+  position: relative; /* referenca za mobilni dropdown */
+  z-index:50;
+}
+.container{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  text-decoration:none;
+}
+.brand .logo, .logo{
+  height:40px;
+  width:auto;
+  filter:drop-shadow(0 0 10px var(--cyan));
+}
+
+/* NAV */
+.nav{
+  margin-left:auto;           /* gura nav ka desno na desktopu */
+  display:flex;
+  align-items:center;
+  gap:24px;
+}
+.nav a{
+  color:var(--cyan);
+  text-decoration:none;
+  font-size:16px;
+  text-shadow:0 0 10px var(--cyan);
+  transition:.25s;
+}
+.nav a:hover,
+.nav a[aria-current="page"]{
+  color:#fff;
+  text-shadow:0 0 18px var(--cyan), 0 0 28px var(--cyan);
+}
+
+/* DESNO: jezik + hamburger */
+.right-controls{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-left: 16px;
+}
+.lang-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:30px;
+  padding:0 12px;
+  background:transparent;
+  border:1px solid rgba(0,255,255,.35);
+  color:var(--cyan);
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+  text-shadow:0 0 8px var(--cyan);
+  transition:.3s;
+}
+.lang-btn:hover{
+  background:var(--cyan);
+  color:#012528;
+  box-shadow:0 0 15px rgba(0,255,255,.4);
+}
+.nav-toggle{
+  background:transparent;
+  border:0;
+  color:var(--cyan);
+  font-size:28px;
+  cursor:pointer;
+  line-height:1;
+  display:none; /* prikazuje se na < 768px */
+}
+
+/* ===== MAIN ===== */
+.login-page{
+  flex:1;
+  max-width:520px;
+  width:100%;
+  margin:50px auto 60px;
+  padding:0 20px;
+}
+.page-title{
+  text-align:center;
+  color:var(--cyan);
+  font-size:2.1rem;
+  text-shadow:0 0 12px rgba(0,255,255,.5);
+}
+.page-sub{
+  text-align:center;
+  color:#cfefff;
+  margin:8px 0 22px;
+}
+.login-card{
+  background: rgba(0,0,0,.45);
+  border:1px solid rgba(0,255,255,.2);
+  border-radius:16px;
+  box-shadow:0 0 22px rgba(0,255,255,.12);
+  padding:22px;
+}
+.field{ margin-bottom:16px; }
+label{ display:block; margin-bottom:6px; color:#aeefff; }
+input{
+  width:100%;
+  background:#0f2123;
+  border:1px solid rgba(0,255,255,.3);
+  color:#e6ffff;
+  padding:12px 14px;
+  border-radius:10px;
+  outline:none;
+  transition:border-color .2s, box-shadow .2s;
+}
+input:focus{
+  border-color:var(--cyan);
+  box-shadow:0 0 12px rgba(0,255,255,.25);
+}
+.password-wrap{ position:relative; }
+.pw-toggle{
+  position:absolute; right:8px; top:50%; transform:translateY(-50%);
+  background:transparent; border:0; cursor:pointer; font-size:16px; color:#9aefff;
+}
+.pw-toggle.active{ color:#fff; text-shadow:0 0 10px var(--cyan); }
+.error{ display:block; margin-top:6px; color:#ffb4b4; min-height:1em; }
+.checkbox{ display:flex; align-items:center; gap:10px; color:#cfefff; margin:8px 0 14px; }
+.checkbox input{ width:auto; }
+
+.btn-primary{
+  display:inline-block; padding:12px 20px; background:var(--cyan); color:#012528;
+  border:none; border-radius:12px; font-weight:700; cursor:pointer;
+  box-shadow:0 0 18px rgba(0,255,255,.35); transition: transform .15s, filter .15s;
+}
+.btn-primary:hover{ transform:translateY(-1px); filter:brightness(1.05); }
+
+/* ===== FOOTER ===== */
+.site-footer{
+  background: rgba(8, 32, 34, 0.85);
+  border-top:1px solid rgba(0,255,255,.2);
+  text-align:center; padding:25px 0; color:#aeefff; font-size:.95rem;
+  letter-spacing:.5px; box-shadow:0 -2px 15px rgba(0,255,255,.15);
+  margin-top:auto;
+}
+.footer-content{ max-width:1000px; margin:0 auto; }
+
+/* ===== RESPONSIVE ===== */
+
+/* TELEFONI: nav ide u dropdown, dugme EN ostaje pored hamburgera DESNO */
+@media (max-width: 768px){
+  .nav-toggle{ display:block; }
+
+  .container{
+    align-items: center;
+  }
+
+  .nav{
+    /* dropdown panel */
+    display:none;
+    position:absolute;
+    right:20px;
+    top:100%;
+    background:#111;
+    border:1px solid rgba(0,255,255,.35);
+    border-radius:12px;
+    box-shadow:0 6px 24px rgba(0,0,0,.5), 0 0 20px rgba(0,255,255,.15);
+    padding:12px;
+    flex-direction:column;
+    gap:10px;
+    z-index:999;
+  }
+  .nav.open{ display:flex; }
+
+  /* desni kontrole (EN + ☰) ostaju desno */
+  .right-controls{
+    margin-left: auto;
+  }
+
+  /* smanji malo logo i razmake */
+  .brand .logo{ height:36px; }
+  .nav a{ font-size:15px; }
+  .login-card{ padding:18px; }
+}
+
+
+
+
+
+

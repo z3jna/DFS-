@@ -1,0 +1,18 @@
+{
+  "result": [1, 2, 4, 5, 3, 6, 7],
+  "steps": [
+    { "action": "Visited node 1", "currentStack": [] },
+    { "action": "Added right child 3 to stack", "currentStack": [3] },
+    { "action": "Added left child 2 to stack", "currentStack": [3, 2] },
+    { "action": "Visited node 2", "currentStack": [3] },
+    { "action": "Added right child 5 to stack", "currentStack": [3, 5] },
+    { "action": "Added left child 4 to stack", "currentStack": [3, 5, 4] },
+    { "action": "Visited node 4", "currentStack": [3, 5] },
+    { "action": "Visited node 5", "currentStack": [3] },
+    { "action": "Visited node 3", "currentStack": [] },
+    { "action": "Added right child 7 to stack", "currentStack": [7] },
+    { "action": "Added left child 6 to stack", "currentStack": [7, 6] },
+    { "action": "Visited node 6", "currentStack": [7] },
+    { "action": "Visited node 7", "currentStack": [] }
+  ]
+}
