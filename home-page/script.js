@@ -107,7 +107,7 @@ if (langToggle) {
     applyTranslations(next);
   });
 }
-/* === EN dugme van menija na telefonu === */
+
 (function () {
   const nav = document.querySelector('.nav');
   const headerContainer = document.querySelector('.site-header .container');

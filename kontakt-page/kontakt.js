@@ -1,4 +1,4 @@
-// ===== HAMBURGER MENI =====
+
 const btn = document.querySelector('.nav-toggle');
 const nav = document.querySelector('.nav');
 if (btn && nav) {
@@ -14,7 +14,6 @@ if (btn && nav) {
   });
 }
 
-// ===== i18n PREVOD (SR ↔ EN) =====
 const TRANSLATIONS = {
   sr: {
     'meta.contactTitle': 'Kontakt — DFS Vizualizacija',
@@ -95,32 +94,32 @@ let currentLang = localStorage.getItem('lang') || 'sr';
 function applyTranslations(lang) {
   const dict = TRANSLATIONS[lang] || TRANSLATIONS.sr;
 
-  // <title>
+  
   const titleEl = document.querySelector('title[data-i18n^="meta."]');
   if (titleEl) {
     const key = titleEl.getAttribute('data-i18n');
     if (dict[key]) titleEl.textContent = dict[key];
   }
 
-  // tekst
+  
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (dict[key] !== undefined) el.textContent = dict[key];
   });
 
-  // placeholder
+ 
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
     if (dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
   });
 
-  // aria-label
+ 
   document.querySelectorAll('[data-i18n-aria]').forEach(el => {
     const key = el.getAttribute('data-i18n-aria');
     if (dict[key] !== undefined) el.setAttribute('aria-label', dict[key]);
   });
 
-  // dugme EN/SRP
+ 
   const langBtn = document.getElementById('langToggle');
   if (langBtn) langBtn.textContent = (lang === 'sr') ? 'EN' : 'SRP';
 
@@ -128,10 +127,10 @@ function applyTranslations(lang) {
   localStorage.setItem('lang', lang);
 }
 
-// inicijalizacija
+
 applyTranslations(currentLang);
 
-// EN/SRP klik
+
 const langToggle = document.getElementById('langToggle');
 if (langToggle) {
   langToggle.addEventListener('click', () => {
@@ -140,7 +139,7 @@ if (langToggle) {
   });
 }
 
-// ===== VALIDACIJA + REDIRECT NA hvala.html =====
+
 const form = document.getElementById('contactForm');
 if (form) {
   const toast = document.getElementById('toast');

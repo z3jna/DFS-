@@ -17,12 +17,12 @@ body{
   color:#fff;
 }
 
-/* ===== HEADER ===== */
+
 .site-header{
   background:var(--header-bg);
   padding:14px 20px;
   box-shadow:0 0 10px rgba(2,225,241,.26);
-  position: relative; /* referenca za mobilni dropdown */
+  position: relative; 
   z-index:50;
 }
 .container{
@@ -42,9 +42,9 @@ body{
   filter:drop-shadow(0 0 10px var(--cyan));
 }
 
-/* NAV */
+
 .nav{
-  margin-left:auto;           /* gura nav ka desno na desktopu */
+  margin-left:auto;           
   display:flex;
   align-items:center;
   gap:24px;
@@ -62,7 +62,7 @@ body{
   text-shadow:0 0 18px var(--cyan), 0 0 28px var(--cyan);
 }
 
-/* DESNO: jezik + hamburger */
+
 .right-controls{
   display:flex;
   align-items:center;
@@ -96,10 +96,10 @@ body{
   font-size:28px;
   cursor:pointer;
   line-height:1;
-  display:none; /* prikazuje se na < 768px */
+  display:none; 
 }
 
-/* ===== MAIN ===== */
+
 .login-page{
   flex:1;
   max-width:520px;
@@ -158,7 +158,7 @@ input:focus{
 }
 .btn-primary:hover{ transform:translateY(-1px); filter:brightness(1.05); }
 
-/* ===== FOOTER ===== */
+
 .site-footer{
   background: rgba(8, 32, 34, 0.85);
   border-top:1px solid rgba(0,255,255,.2);
@@ -168,9 +168,9 @@ input:focus{
 }
 .footer-content{ max-width:1000px; margin:0 auto; }
 
-/* ===== RESPONSIVE ===== */
 
-/* TELEFONI: nav ide u dropdown, dugme EN ostaje pored hamburgera DESNO */
+
+
 @media (max-width: 768px){
   .nav-toggle{ display:block; }
 
@@ -179,7 +179,7 @@ input:focus{
   }
 
   .nav{
-    /* dropdown panel */
+    
     display:none;
     position:absolute;
     right:20px;
@@ -195,12 +195,12 @@ input:focus{
   }
   .nav.open{ display:flex; }
 
-  /* desni kontrole (EN + ☰) ostaju desno */
+  
   .right-controls{
     margin-left: auto;
   }
 
-  /* smanji malo logo i razmake */
+ 
   .brand .logo{ height:36px; }
   .nav a{ font-size:15px; }
   .login-card{ padding:18px; }
