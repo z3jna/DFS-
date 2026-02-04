@@ -1,196 +1,64 @@
-:root{
-  --bg-dark: #0b0b0b;
-  --header-bg: #041d1e;
-  --cyan: #00ffff;
-  --text: #e6ffff;
-}
-
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%}
-
-body{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  font-family:'Poppins',system-ui,Arial,sans-serif;
-  color:#fff;
-  background:var(--bg-dark);
-}
 
 
-.site-header{
-  background:var(--header-bg);
-  padding:8px 17px;
-  box-shadow:0 0 10px rgba(2,225,241,.26);
-  position:relative;
-  z-index:50;
-}
-.container{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
 
 
-.brand{
-  display:flex;
-  align-items:center;
-  text-decoration:none;
-}
-.logo{
-  height:3.2rem;
-  width:auto;
-  filter:drop-shadow(0 0 10px var(--cyan));
-  transition:.25s;
-}
-.brand:hover .logo{
-  transform:scale(1.05);
-}
-
-
-.nav{
-  display:flex;
-  align-items:center;
-  gap:26px;
-}
-.nav a{
-  color:var(--cyan);
-  text-decoration:none;
-  font-size:17px;
-  text-shadow:0 0 10px var(--cyan);
-  transition:.25s;
-}
-.nav a:hover,
-.nav a[aria-current="page"]{
-  color:#fff;
-  text-shadow:0 0 18px var(--cyan),0 0 28px var(--cyan);
-}
-
-
-.lang-btn{
-  background:transparent;
-  border:1px solid var(--cyan);
-  color:var(--cyan);
-  border-radius:10px;
-  padding:6px 12px;
-  cursor:pointer;
-  font-weight:600;
-  text-shadow:0 0 10px var(--cyan);
-  transition:.25s;
-}
-.lang-btn:hover{
-  background:var(--cyan);
-  color:#041d1e;
-  text-shadow:none;
-}
-
-
-.nav-toggle{
-  display:none;
-  background:transparent;
-  border:0;
-  color:var(--cyan);
-  font-size:28px;
-  cursor:pointer;
-}
 
 
 .algoritmi-page{
-  flex:1;
-  max-width:900px;
-  margin:50px auto;
-  padding:0 20px;
+  flex: 1;
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 20px;
 }
+
 .page-title{
-  text-align:center;
-  font-size:2.3rem;
-  color:var(--cyan);
-  text-shadow:0 0 10px rgba(0,255,255,.5);
-  margin-bottom:10px;
+  text-align: center;
+  font-size: 2.3rem;
+  color: var(--cyan);
+  text-shadow: 0 0 10px rgba(0,255,255,.5);
+  margin-bottom: 10px;
 }
+
 .page-sub{
-  text-align:center;
-  color:#b5faff;
-  margin-bottom:28px;
+  text-align: center;
+  color: #b5faff;
+  margin-bottom: 28px;
 }
+
 .algoritmi-content p{
-  margin-bottom:16px;
-  line-height:1.7;
-  color:var(--text);
+  margin-bottom: 16px;
+  line-height: 1.7;
+  color: var(--text);
 }
+
 .algoritmi-content ul{
-  margin-left:20px;
-  margin-bottom:24px;
-  line-height:1.8;
+  margin-left: 20px;
+  margin-bottom: 24px;
+  line-height: 1.8;
 }
+
 .algoritmi-content h2{
-  color:var(--cyan);
-  margin:20px 0 10px;
-  text-shadow:0 0 8px rgba(0,255,255,.3);
+  color: var(--cyan);
+  margin: 20px 0 10px;
+  text-shadow: 0 0 8px rgba(0,255,255,.3);
 }
+
 .quote-box{
-  margin-top:24px;
-  padding:16px;
-  border-left:4px solid var(--cyan);
-  background:rgba(0,255,255,.08);
-  border-radius:10px;
+  margin-top: 24px;
+  padding: 16px;
+  border-left: 4px solid var(--cyan);
+  background: rgba(0,255,255,.08);
+  border-radius: 10px;
 }
+
 .quote-box span{
-  display:block;
-  text-align:right;
-  color:#b5faff;
-  font-style:italic;
-  margin-top:6px;
+  display: block;
+  text-align: right;
+  color: #b5faff;
+  font-style: italic;
+  margin-top: 6px;
 }
 
 
-.site-footer{
-  background:rgba(8,32,34,.85);
-  border-top:1px solid rgba(0,255,255,.2);
-  text-align:center;
-  padding:25px 0;
-  color:#aeefff;
-  font-size:.95rem;
-  box-shadow:0 -2px 15px rgba(0,255,255,.15);
-}
 
 
-@media(max-width:768px){
-  .nav-toggle{display:block}
-  .nav{
-    display:none;
-    position:absolute;
-    right:24px;
-    top:100%;
-    background:#111;
-    border:1px solid rgba(0,255,255,.35);
-    border-radius:12px;
-    box-shadow:0 6px 24px rgba(0,0,0,.5);
-    padding:12px;
-    flex-direction:column;
-    gap:10px;
-  }
-  .nav.open{display:flex}
-}
-
-@media (max-width:768px){
-  .site-header .container{ position: relative; }
-
- 
-  .lang-btn--floating{
-    position: absolute;
-    right: 56px;           
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 60;
-    
-    padding: 6px 12px;
-    border-radius: 10px;
-  }
-
-  
-  .nav-toggle{
-    position: relative;
-    z-index: 61;
-  }
-}

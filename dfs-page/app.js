@@ -1,109 +1,170 @@
 
-const nav = document.getElementById('site-nav');
-const burger = document.getElementById('navToggle');
+const API_URL =
+  "https://vebdizajn-4.onrender.com/api/vebdizajn/pretraga-stabla-po-dubini-koraci"
 
-function closeMenu(){
-  nav.classList.remove('open');
-  burger.setAttribute('aria-expanded','false');
-}
-function openMenu(){
-  nav.classList.add('open');
-  burger.setAttribute('aria-expanded','true');
+const nextBtn = document.getElementById("nextStep");
+const resetBtn = document.getElementById("resetBtn");
+const stepsEl = document.getElementById("dfs-steps");
+const metaEl = document.getElementById("dfs-meta");
+const nodeEls = Array.from(document.querySelectorAll("#treeSvg .node"));
+
+let data = null;
+let stepIndex = 0;
+let visited = new Set();
+let currentNode = null;
+
+
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
-if (burger && nav){
-  burger.addEventListener('click', () => {
-    const isOpen = nav.classList.toggle('open');
-    burger.setAttribute('aria-expanded', String(isOpen));
-  });
+function getNodeEl(id) {
+  return document.querySelector(`#treeSvg .node[data-id="${id}"]`);
+}
+
+
+function parseVisitedFromAction(actionText) {
+  const m = String(actionText).match(/Visited node\s+(\d+)/i);
+  return m ? Number(m[1]) : null;
+}
+
+function clearSteps() {
+  if (stepsEl) stepsEl.innerHTML = "";
+}
+
+function appendStep(stepObj, idx) {
+  if (!stepsEl) return;
+  const p = document.createElement("p");
+  p.innerHTML =
+    `<strong>${idx + 1}.</strong> ${escapeHtml(stepObj.action)} ` +
+    `<span style="opacity:.85">| stack: [${escapeHtml((stepObj.currentStack || []).join(", "))}]</span>`;
+  stepsEl.appendChild(p);
+  stepsEl.scrollTop = stepsEl.scrollHeight;
+}
+
+function paint(stepObj) {
+  
+  nodeEls.forEach(el => el.classList.remove("visited", "stack", "current"));
 
   
-  nav.addEventListener('click', (e) => {
-    if (e.target.tagName === 'A') closeMenu();
-  });
-
-  document.addEventListener('click', (e) => {
-    const within = nav.contains(e.target) || burger.contains(e.target);
-    if (!within) closeMenu();
-  });
-
-  
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeMenu();
-  });
-}
-
-
-const TRANSLATIONS = {
-  sr:{meta_title:"DFS",nav_home:"Početna",nav_algorithms:"Algoritmi",nav_dfs:"DFS",nav_contact:"Kontakt",nav_login:"Prijava",lang_button:"EN",aria_brand:"Početna",aria_menu:"Otvorite meni",footer_text:"© 2025 DFS Vizualizacija — Zejna Mahmutović"},
-  en:{meta_title:"DFS",nav_home:"Home",nav_algorithms:"Algorithms",nav_dfs:"DFS",nav_contact:"Contact",nav_login:"Login",lang_button:"SR",aria_brand:"Home",aria_menu:"Open menu",footer_text:"© 2025 DFS Visualization — Zejna Mahmutović"}
-};
-let currentLang = localStorage.getItem('lang') || 'sr';
-
-function applyTranslations(lang){
-  const t = TRANSLATIONS[lang] || TRANSLATIONS.sr;
-  document.title = t.meta_title;
-  document.documentElement.setAttribute('lang', lang==='sr'?'sr':'en');
-
-  const links = nav.querySelectorAll('a');
-  if (links.length >= 5){
-    links[0].textContent = t.nav_home;
-    links[1].textContent = t.nav_algorithms;
-    links[2].textContent = t.nav_dfs;
-    links[3].textContent = t.nav_contact;
-    links[4].textContent = t.nav_login;
+  for (const v of visited) {
+    const el = getNodeEl(v);
+    if (el) el.classList.add("visited");
   }
-  const langBtn = document.getElementById('langToggle');
-  if (langBtn) langBtn.textContent = t.lang_button;
 
-  const brand = document.querySelector('.brand');
-  if (brand) brand.setAttribute('aria-label', t.aria_brand);
-  if (burger) burger.setAttribute('aria-label', t.aria_menu);
+  
+  const stack = stepObj?.currentStack || [];
+  for (const s of stack) {
+    const el = getNodeEl(s);
+    if (el) el.classList.add("stack");
+  }
 
-  const footerP = document.querySelector('.footer-content p');
-  if (footerP) footerP.textContent = t.footer_text;
+  
+  if (currentNode !== null) {
+    const el = getNodeEl(currentNode);
+    if (el) el.classList.add("current");
+  }
 
-  currentLang = lang;
-  localStorage.setItem('lang', lang);
+  
+  if (!metaEl) return;
+  metaEl.innerHTML = `
+    <div><strong>Current:</strong> ${currentNode ?? "—"}</div>
+    <div><strong>Visited:</strong> [${escapeHtml(Array.from(visited).join(", "))}]</div>
+    <div><strong>Stack:</strong> [${escapeHtml(stack.join(", "))}]</div>
+  `;
 }
-applyTranslations(currentLang);
 
-const langBtn = document.getElementById('langToggle');
-if (langBtn){
-  langBtn.addEventListener('click', ()=>{
-    const next = currentLang === 'sr' ? 'en' : 'sr';
-    applyTranslations(next);
-  });
-}
-
-
-(function relocateLangBtn(){
-  const headerContainer = document.querySelector('.site-header .container');
-  if (!langBtn || !nav || !headerContainer) return;
-
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
-  if (isMobile){
-    
-    headerContainer.appendChild(langBtn);
-    langBtn.classList.add('lang-btn--floating');
+function setLoading(isLoading) {
+  if (!nextBtn) return;
+  if (isLoading) {
+    nextBtn.disabled = true;
+    nextBtn.textContent = "Učitavanje…";
+    if (metaEl) metaEl.textContent = "Učitavanje…";
   } else {
+    nextBtn.disabled = false;
+    nextBtn.textContent = "Sledeći korak";
+  }
+}
+
+async function loadData() {
+  const res = await fetch(API_URL, { cache: "no-store" });
+  if (!res.ok) throw new Error("API error: " + res.status);
+
+  const json = await res.json();
+
   
-    nav.appendChild(langBtn);
-    langBtn.classList.remove('lang-btn--floating');
+  if (!json || !Array.isArray(json.steps)) {
+    throw new Error("Bad API format (missing steps)");
   }
-})();
-window.addEventListener('resize', () => {
+  return json;
+}
 
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
-  const headerContainer = document.querySelector('.site-header .container');
-  if (!langBtn || !nav || !headerContainer) return;
+function finish() {
+  if (!nextBtn) return;
+  nextBtn.disabled = true;
+  nextBtn.textContent = "Gotovo";
 
-  if (isMobile){
-    headerContainer.appendChild(langBtn);
-    langBtn.classList.add('lang-btn--floating');
-  } else {
-    nav.appendChild(langBtn);
-    langBtn.classList.remove('lang-btn--floating');
+  const p = document.createElement("p");
+  p.innerHTML = `<strong>✅ DFS završen.</strong>`;
+  stepsEl.appendChild(p);
+  stepsEl.scrollTop = stepsEl.scrollHeight;
+}
+
+async function init() {
+  try {
+    setLoading(true);
+
+    data = await loadData();
+    stepIndex = 0;
+    visited = new Set();
+    currentNode = null;
+
+    clearSteps();
+    paint({ currentStack: [] });
+
+    setLoading(false);
+  } catch (e) {
+    console.error(e);
+    if (metaEl) {
+      metaEl.innerHTML =
+        "<strong>Greška:</strong> Ne mogu da učitam DFS podatke sa API-ja. Pogledaj Console.";
+    }
+    if (nextBtn) nextBtn.disabled = true;
   }
+}
+
+
+nextBtn?.addEventListener("click", () => {
+  if (!data) return;
+
+  if (stepIndex < data.steps.length) {
+    const stepObj = data.steps[stepIndex];
+
+    appendStep(stepObj, stepIndex);
+
+    const v = parseVisitedFromAction(stepObj.action);
+    if (v !== null) {
+      currentNode = v;
+      visited.add(v);
+    }
+
+    paint(stepObj);
+    stepIndex++;
+  }
+
+  if (stepIndex >= data.steps.length) finish();
 });
+
+resetBtn?.addEventListener("click", () => init());
+
+
+init();
+
+
+
 

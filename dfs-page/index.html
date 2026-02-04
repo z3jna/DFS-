@@ -2,43 +2,131 @@
 <html lang="sr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DFS</title>
-  <link rel="stylesheet" href="style.css" />
+  
+   
+  <link rel="stylesheet" href="../assets/global.css" />
+
+ 
+  <link rel="stylesheet" href="./style.css" />
 </head>
-<body class="no-bg">
+
+<body class="with-bg">
+
   <header class="site-header">
     <div class="container">
       <a class="brand" href="../home-page/index.html" aria-label="Početna">
         <img src="../assets/logo1.png" alt="DFS Logo" class="logo"/>
       </a>
 
-     
-      <nav id="site-nav" class="nav" aria-label="Glavna navigacija">
+      <nav class="nav" data-nav>
         <a href="../home-page/index.html">Početna</a>
         <a href="../algoritmi-page/index.html">Algoritmi</a>
         <a href="../dfs-page/index.html" aria-current="page">DFS</a>
         <a href="../kontakt-page/index.html">Kontakt</a>
         <a href="../login-page/index.html">Prijava</a>
-        
-        <button id="langToggle" class="lang-btn" type="button" aria-label="Promeni jezik">EN</button>
+        <button id="langToggle" class="lang-btn" type="button">EN</button>
       </nav>
 
-      
-      <button
-        class="nav-toggle"
-        id="navToggle"
-        type="button"
-        aria-label="Otvorite meni"
-        aria-controls="site-nav"
-        aria-expanded="false">☰</button>
+      <button class="nav-toggle" aria-label="Otvorite meni" aria-expanded="false" type="button">☰</button>
     </div>
   </header>
 
-  
-    
+  <main class="page">
+   
 
-  
+    <section class="hero">
+      <h1 id="dfsTitle">DFS – Vizualizacija korak po korak</h1>
+      <p id="dfsSubtitle" class="subtitle">
+        Prati kako algoritam pretražuje stablo: <strong>visited</strong>, <strong>stack</strong> i trenutni čvor.
+      </p>
+
+      <div class="controls">
+        <button id="nextStep" class="btn btn-primary">Sledeći korak</button>
+        <button id="resetBtn" class="btn btn-ghost" type="button">Reset</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      
+      <article class="card">
+        <header class="card-head">
+          <h2 id="vizTitle">Vizualizacija</h2>
+        </header>
+
+        <div class="card-body">
+          <div class="svg-wrap">
+            <svg id="treeSvg" viewBox="0 0 700 420" role="img" aria-label="DFS stablo">
+              <g class="edges">
+                <line x1="350" y1="70"  x2="200" y2="180" />
+                <line x1="350" y1="70"  x2="500" y2="180" />
+                <line x1="200" y1="180" x2="130" y2="320" />
+                <line x1="200" y1="180" x2="270" y2="320" />
+                <line x1="500" y1="180" x2="430" y2="320" />
+                <line x1="500" y1="180" x2="570" y2="320" />
+              </g>
+
+              
+              <g class="node" data-id="1" transform="translate(350,70)">
+                <circle r="26"></circle>
+                <text text-anchor="middle" dominant-baseline="central">1</text>
+              </g>
+
+              <g class="node" data-id="2" transform="translate(200,180)">
+                <circle r="26"></circle>
+                <text text-anchor="middle" dominant-baseline="central">2</text>
+              </g>
+
+              <g class="node" data-id="3" transform="translate(500,180)">
+                <circle r="26"></circle>
+                <text text-anchor="middle" dominant-baseline="central">3</text>
+              </g>
+
+              <g class="node" data-id="4" transform="translate(130,320)">
+                <circle r="26"></circle>
+                <text text-anchor="middle" dominant-baseline="central">4</text>
+              </g>
+
+              <g class="node" data-id="5" transform="translate(270,320)">
+                <circle r="26"></circle>
+                <text text-anchor="middle" dominant-baseline="central">5</text>
+              </g>
+
+              <g class="node" data-id="6" transform="translate(430,320)">
+                <circle r="26"></circle>
+                <text text-anchor="middle" dominant-baseline="central">6</text>
+              </g>
+
+              <g class="node" data-id="7" transform="translate(570,320)">
+                <circle r="26"></circle>
+                <text text-anchor="middle" dominant-baseline="central">7</text>
+              </g>
+            </svg>
+          </div>
+
+          <div class="legend">
+            <span><span class="dot current"></span> <span id="lgCurrent">Trenutni</span></span>
+            <span><span class="dot visited"></span> <span id="lgVisited">Visited</span></span>
+            <span><span class="dot stack"></span> <span id="lgStack">U steku</span></span>
+          </div>
+
+          <div id="dfs-meta" class="meta">Učitavanje…</div>
+        </div>
+      </article>
+
+      
+      <article class="card card-dark">
+        <header class="card-head">
+          <h2 id="stepsTitle">Koraci</h2>
+        </header>
+
+        <div class="card-body">
+          <div id="dfs-steps" class="steps"></div>
+        </div>
+      </article>
+    </section>
+  </main>
 
   <footer class="site-footer">
     <div class="footer-content">
@@ -49,3 +137,4 @@
   <script src="app.js" defer></script>
 </body>
 </html>
+

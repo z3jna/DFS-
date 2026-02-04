@@ -1,12 +1,14 @@
 
 const btn = document.querySelector('.nav-toggle');
 const nav = document.querySelector('.nav');
+
 if (btn && nav) {
   btn.addEventListener('click', () => {
     const open = nav.classList.toggle('open');
     btn.setAttribute('aria-expanded', String(open));
   });
-  nav.addEventListener('click', e => {
+
+  nav.addEventListener('click', (e) => {
     if (e.target.tagName === 'A') {
       nav.classList.remove('open');
       btn.setAttribute('aria-expanded', 'false');
@@ -17,12 +19,14 @@ if (btn && nav) {
 
 const toggle = document.getElementById('togglePw');
 const pw = document.getElementById('password');
+
 if (toggle && pw) {
   toggle.addEventListener('click', () => {
     pw.type = pw.type === 'password' ? 'text' : 'password';
     toggle.classList.toggle('active');
   });
 }
+
 
 const TRANSLATIONS = {
   sr: {
@@ -34,7 +38,7 @@ const TRANSLATIONS = {
     'nav.prijava': 'Prijava',
 
     'login.title': 'Prijava',
-    'login.subtitle': 'Pristupi nalogu da sačuvaš stabla, scenarije i rezultate.',
+    'login.subtitle': 'Prijava je simulacija i koristi se isključivo za demonstraciju rada aplikacije.',
     'login.emailLabel': 'Email',
     'login.emailPh': 'npr. ana@mail.com',
     'login.passwordLabel': 'Lozinka',
@@ -42,6 +46,10 @@ const TRANSLATIONS = {
     'login.showPw': 'Prikaži lozinku',
     'login.remember': 'Zapamti me',
     'login.submit': 'Prijavi se',
+
+    'msg.fill': 'Popuni oba polja.',
+    'msg.invalid': 'Neispravan email ili lozinka.',
+    'msg.success': 'Uspešna prijava! (simulacija)',
 
     'footer.copy': '© 2025 DFS Vizualizacija — Zejna Mahmutović'
   },
@@ -54,7 +62,7 @@ const TRANSLATIONS = {
     'nav.prijava': 'Login',
 
     'login.title': 'Login',
-    'login.subtitle': 'Access your account to save trees, scenarios, and results.',
+    'login.subtitle': 'Login is a simulation and is used exclusively for demonstrating the application.',
     'login.emailLabel': 'Email',
     'login.emailPh': 'e.g. ana@mail.com',
     'login.passwordLabel': 'Password',
@@ -62,6 +70,10 @@ const TRANSLATIONS = {
     'login.showPw': 'Show password',
     'login.remember': 'Remember me',
     'login.submit': 'Sign in',
+
+    'msg.fill': 'Fill in both fields.',
+    'msg.invalid': 'Invalid email or password.',
+    'msg.success': 'Login successful! (simulation)',
 
     'footer.copy': '© 2025 DFS Visualization — Zejna Mahmutović'
   }
@@ -72,135 +84,109 @@ let currentLang = localStorage.getItem('lang') || 'sr';
 function applyTranslations(lang) {
   const dict = TRANSLATIONS[lang] || TRANSLATIONS.sr;
 
- 
   const titleEl = document.querySelector('title[data-i18n="meta.title"]');
-  if (titleEl && dict['meta.title']) titleEl.textContent = dict['meta.title'];
-
+  if (titleEl) titleEl.textContent = dict['meta.title'];
 
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (dict[key] !== undefined) el.textContent = dict[key];
+    if (dict[key]) el.textContent = dict[key];
   });
 
- 
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
-    if (dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
+    if (dict[key]) el.setAttribute('placeholder', dict[key]);
   });
-
 
   document.querySelectorAll('[data-i18n-aria]').forEach(el => {
     const key = el.getAttribute('data-i18n-aria');
-    if (dict[key] !== undefined) el.setAttribute('aria-label', dict[key]);
+    if (dict[key]) el.setAttribute('aria-label', dict[key]);
   });
 
-
   const langBtn = document.getElementById('langToggle');
-  if (langBtn) langBtn.textContent = (lang === 'sr') ? 'EN' : 'SRP';
+  if (langBtn) langBtn.textContent = (lang === 'sr') ? 'EN' : 'SR';
 
   currentLang = lang;
   localStorage.setItem('lang', lang);
 }
 
-
 applyTranslations(currentLang);
 
-
-const langToggle = document.getElementById('langToggle');
-if (langToggle) {
-  langToggle.addEventListener('click', () => {
-    const next = currentLang === 'sr' ? 'en' : 'sr';
-    applyTranslations(next);
-  });
-}
-
-
-const form = document.getElementById('loginForm');
-if (form) {
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let ok = true;
-    form.querySelectorAll('.field').forEach(f => {
-      const input = f.querySelector('input');
-      const err = f.querySelector('.error');
-      if (!input.checkValidity()) {
-        ok = false;
-        err.textContent = currentLang === 'en' ? 'Check input.' : 'Proveri unos.';
-      } else {
-        err.textContent = '';
-      }
-    });
-    if (ok) {
-      alert(currentLang === 'en' ? 'Demo login successful!' : 'Uspešna demo prijava!');
-      form.reset();
-    }
-  });
-}
-
+document.getElementById('langToggle')?.addEventListener('click', () => {
+  applyTranslations(currentLang === 'sr' ? 'en' : 'sr');
+});
 
 
 (async () => {
-  const q = id => document.getElementById(id);
-  const msg = q('msg');
-  const loginBtn = q('loginBtn');
+  const form = document.getElementById('loginForm');
 
-  
-  async function loadUsers() {
-    try {
-      const resp = await fetch('users.json', {cache: "no-store"});
-      if (!resp.ok) throw new Error('Cannot load users.json');
-      return await resp.json();
-    } catch (e) {
-      console.error(e);
-      msg.textContent = 'Greška pri učitavanju podataka (pogledaj konzolu).';
-      return [];
-    }
+ 
+  let msg = document.getElementById('msg');
+  if (!msg) {
+    msg = document.createElement('div');
+    msg.id = 'msg';
+    msg.style.marginTop = '14px';
+    msg.style.fontWeight = '600';
+    form.appendChild(msg);
   }
 
-  
-  const sha256Hex = async (text) => {
-    const enc = new TextEncoder();
-    const hashBuffer = await crypto.subtle.digest('SHA-256', enc.encode(text));
-    const bytes = new Uint8Array(hashBuffer);
-    return Array.from(bytes).map(b => b.toString(16).padStart(2,'0')).join('');
-  };
+  function setMsg(text, ok = false) {
+    msg.style.color = ok ? '#00ff99' : '#ff7b7b';
+    msg.textContent = text;
+  }
 
-  const users = await loadUsers();
+  async function sha256Hex(text) {
+    const enc = new TextEncoder().encode(text);
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return [...new Uint8Array(buf)]
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
+  }
 
-  loginBtn.addEventListener('click', async () => {
-    msg.textContent = '';
-    const email = q('email').value.trim().toLowerCase();
-    const password = q('password').value;
+  async function loadUsers() {
+    const resp = await fetch('./users.json', { cache: 'no-store' });
+    if (!resp.ok) throw new Error('Cannot load users.json');
+    return await resp.json();
+  }
+
+  let users = [];
+  try {
+    users = await loadUsers();
+  } catch (e) {
+    console.error(e);
+    setMsg('Greška pri učitavanju users.json.');
+    return;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setMsg('');
+
+    const email = document.getElementById('email').value.trim().toLowerCase();
+    const password = document.getElementById('password').value;
 
     if (!email || !password) {
-      msg.textContent = 'Popuni oba polja.';
+      setMsg(TRANSLATIONS[currentLang]['msg.fill']);
       return;
     }
 
     const user = users.find(u => u.email.toLowerCase() === email);
     if (!user) {
-      msg.textContent = 'Neispravan email ili lozinka.';
+      setMsg(TRANSLATIONS[currentLang]['msg.invalid']);
       return;
     }
 
-    
     const hashed = await sha256Hex(password);
+
     if (hashed === user.password) {
-      msg.style.color = '#0f0';
-      msg.textContent = 'Uspešna prijava! (simulacija)';
-      
+      setMsg(TRANSLATIONS[currentLang]['msg.success'], true);
+
+     
+      localStorage.setItem('loggedIn', 'true');
+      localStorage.setItem('userEmail', email);
+
+   
     } else {
-      msg.style.color = '#f66';
-      msg.textContent = 'Neispravan email ili lozinka.';
+      setMsg(TRANSLATIONS[currentLang]['msg.invalid']);
     }
   });
-
-  
-  ['email','password'].forEach(id => {
-    q(id).addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') loginBtn.click();
-    });
-  });
-
 })();
-
